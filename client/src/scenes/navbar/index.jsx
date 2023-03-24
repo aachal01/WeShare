@@ -56,7 +56,7 @@ const Navbar = () => {
             },
           }}
         >
-          WeShare
+          Sociopedia
         </Typography>
         {isNonMobileScreens && (
           <FlexBetween

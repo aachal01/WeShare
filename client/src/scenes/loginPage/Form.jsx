@@ -23,7 +23,7 @@ const registerSchema = yup.object().shape({
   password: yup.string().required("required"),
   location: yup.string().required("required"),
   occupation: yup.string().required("required"),
-  picture: yup.string().required("required"),
+  // picture: yup.string().required("required"),
 });
 
 const loginSchema = yup.object().shape({
@@ -38,7 +38,7 @@ const initialValuesRegister = {
   password: "",
   location: "",
   occupation: "",
-  picture: "",
+  // picture: "",
 };
 
 const initialValuesLogin = {
@@ -61,7 +61,7 @@ const Form = () => {
     for (let value in values) {
       formData.append(value, values[value]);
     }
-    formData.append("picturePath", values.picture.name);
+    // formData.append("picturePath", values.picture.name);
 
     const savedUserResponse = await fetch(
       "http://localhost:3001/auth/register",
@@ -99,7 +99,7 @@ const Form = () => {
 
   const handleFormSubmit = async (values, onSubmitProps) => {
     if (isLogin) await login(values, onSubmitProps);
-    if (isRegister) await register(values, onSubmitProps);
+    else await register(values, onSubmitProps);
   };
 
   return (
@@ -173,7 +173,7 @@ const Form = () => {
                   helperText={touched.occupation && errors.occupation}
                   sx={{ gridColumn: "span 4" }}
                 />
-                <Box
+                {/* <Box
                   gridColumn="span 4"
                   border={`1px solid ${palette.neutral.medium}`}
                   borderRadius="5px"
@@ -205,7 +205,7 @@ const Form = () => {
                       </Box>
                     )}
                   </Dropzone>
-                </Box>
+                </Box> */}
               </>
             )}
 
