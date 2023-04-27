@@ -22,12 +22,26 @@ const UserWidget = ({ userId, picturePath }) => {
   const main = palette.neutral.main;
 
   const getUser = async () => {
-    const response = await fetch(`http://localhost:3001/users/${userId}`, {
-      method: "GET",
-      headers: { Authorization: `Bearer ${token}` },
-    });
-    const data = await response.json();
-    setUser(data);
+    try {
+      const response = await fetch(`http://localhost:3001/users/${userId}`, {
+        method: "GET",
+        headers: { Authorization: `Bearer ${token}` },
+      });
+
+      if(response.ok) {
+        const data = await response.json();
+        console.log("[DATA:UserWidget]", user)
+        setUser(data);
+      }
+      else {
+        throw new Error('[SERVER_ERROR:UserWidget]', response.statusText)
+      }
+    }
+    catch (error) {
+      console.log("[NETWORK_ERROR:UserWidget]", error)
+      setUser(null)
+    }
+
   };
 
   useEffect(() => {
@@ -37,6 +51,8 @@ const UserWidget = ({ userId, picturePath }) => {
   if (!user) {
     return null;
   }
+
+  console.log("[USER:UserWidget]", user)
 
   const {
     firstName,
@@ -54,10 +70,10 @@ const UserWidget = ({ userId, picturePath }) => {
       <FlexBetween
         gap="0.5rem"
         pb="1.1rem"
-        onClick={() => navigate(`/profile/${userId}`)}
+        // onClick={() => navigate(`/profile/${userId}`)}
       >
         <FlexBetween gap="1rem">
-          <UserImage image={picturePath} />
+          {/* <UserImage image={picturePath} /> */}
           <Box>
             <Typography
               variant="h4"

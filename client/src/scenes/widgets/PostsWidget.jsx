@@ -13,7 +13,9 @@ const PostsWidget = ({ userId, isProfile = false }) => {
       method: "GET",
       headers: { Authorization: `Bearer ${token}` },
     });
+    // console.log("[PostsWidget:RESPONSE] response = ", response)
     const data = await response.json();
+    // console.log("[PostsWidget] data = ", data)
     dispatch(setPosts({ posts: data }));
   };
 
@@ -25,17 +27,23 @@ const PostsWidget = ({ userId, isProfile = false }) => {
         headers: { Authorization: `Bearer ${token}` },
       }
     );
+    // console.log("[PostsWidget:getUserPosts] response = ", response)
     const data = await response.json();
+    // console.log("[PostsWidget:getUserPosts] data = ", data)
+
     dispatch(setPosts({ posts: data }));
   };
 
   useEffect(() => {
+    console.log("ijgjhb  ig iblbb")
     if (isProfile) {
       getUserPosts();
     } else {
       getPosts();
     }
-  }, []); // eslint-disable-line react-hooks/exhaustive-deps
+  }, [userId]); // eslint-disable-line react-hooks/exhaustive-deps
+
+  console.log("[PostsWidget:POSTS]", posts)
 
   return (
     <>

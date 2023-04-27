@@ -31,7 +31,7 @@ app.use(morgan("common"));
 app.use(bodyParser.json({limit: "30mb", extended: true}));
 app.use(bodyParser.urlencoded({limit: "30mb", extended: true}));
 app.use(cors());
-app.use("/assets", express.static(path.join(__dirname, 'public/assets')));
+app.use("/assets", express.static(path.join(__dirname, './public/assets')));
 
 
 /* FILE STORAGE */
@@ -68,8 +68,20 @@ mongoose
         app.listen(PORT, () => console.log(`Server Port: ${PORT}`));
 
         /* ADD DATA ONE TIME */
-        // User.insertMany(users);
-        // Post.insertMany(posts);
+        users.forEach(async user => {
+            try {
+                await User.create(user)
+            } catch (error) {
+                console.log("[DATABASE_ERROR] Failed to insert: ", user.email);
+            }
+        })
+        posts.forEach(async post => {
+            try {
+                await Post.create(post)
+            } catch (error) {
+                console.log("[DATABASE_ERROR] Failed to insert: ", post.description);
+            }
+        })
     })
     .catch((error) => console.log(`${error} did not connect`));
 

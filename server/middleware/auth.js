@@ -1,6 +1,7 @@
 import jwt from 'jsonwebtoken';
 
 export const verifyToken = async (req, res, next) => {
+    console.log("verifytoken called")
     try {
         let token = req.header("Authorization");
 
@@ -8,8 +9,11 @@ export const verifyToken = async (req, res, next) => {
             return res.status(403).send("Access Denied");
         }
 
+        // console.log("Token: ", token)
+
         if (token.startsWith("Bearer ")) {
-            token = token.slice(7, token.length).trimleft();
+            // token = token.slice(7, token.length).trimleft();
+            token = token.split(' ')[1];
         }
 
         const verified = jwt.verify(token, process.env.JWT_SECRET)
